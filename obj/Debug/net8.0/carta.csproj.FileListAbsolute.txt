@@ -1,0 +1,15 @@
+C:\Users\juan-\Desktop\Maximo Ites\Programacion\Proyecto\Gestion-de-Carta\obj\Debug\net8.0\carta.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\juan-\Desktop\Maximo Ites\Programacion\Proyecto\Gestion-de-Carta\obj\Debug\net8.0\carta.AssemblyInfoInputs.cache
+C:\Users\juan-\Desktop\Maximo Ites\Programacion\Proyecto\Gestion-de-Carta\obj\Debug\net8.0\carta.AssemblyInfo.cs
+C:\Users\juan-\Desktop\Maximo Ites\Programacion\Proyecto\Gestion-de-Carta\obj\Debug\net8.0\carta.csproj.CoreCompileInputs.cache
+C:\Users\juan-\Desktop\Maximo Ites\Programacion\Proyecto\Gestion-de-Carta\obj\Debug\net8.0\carta.sourcelink.json
+C:\Users\juan-\Desktop\Maximo Ites\Programacion\Proyecto\Gestion-de-Carta\bin\Debug\net8.0\carta.exe
+C:\Users\juan-\Desktop\Maximo Ites\Programacion\Proyecto\Gestion-de-Carta\bin\Debug\net8.0\carta.deps.json
+C:\Users\juan-\Desktop\Maximo Ites\Programacion\Proyecto\Gestion-de-Carta\bin\Debug\net8.0\carta.runtimeconfig.json
+C:\Users\juan-\Desktop\Maximo Ites\Programacion\Proyecto\Gestion-de-Carta\bin\Debug\net8.0\carta.dll
+C:\Users\juan-\Desktop\Maximo Ites\Programacion\Proyecto\Gestion-de-Carta\bin\Debug\net8.0\carta.pdb
+C:\Users\juan-\Desktop\Maximo Ites\Programacion\Proyecto\Gestion-de-Carta\obj\Debug\net8.0\carta.dll
+C:\Users\juan-\Desktop\Maximo Ites\Programacion\Proyecto\Gestion-de-Carta\obj\Debug\net8.0\refint\carta.dll
+C:\Users\juan-\Desktop\Maximo Ites\Programacion\Proyecto\Gestion-de-Carta\obj\Debug\net8.0\carta.pdb
+C:\Users\juan-\Desktop\Maximo Ites\Programacion\Proyecto\Gestion-de-Carta\obj\Debug\net8.0\carta.genruntimeconfig.cache
+C:\Users\juan-\Desktop\Maximo Ites\Programacion\Proyecto\Gestion-de-Carta\obj\Debug\net8.0\ref\carta.dll
