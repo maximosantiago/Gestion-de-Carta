@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using System.IO;
 
 class Plato
 {
@@ -9,9 +10,12 @@ class Plato
     private string descripcion;
     private double precio;
 
-    public Plato(string nombre, string descripcion, double precio)
+    public Plato(string nombre = "", string descripcion = "", double precio = 0, bool contar = true)
     {
-        contador++;
+        if(contar){
+            contador++;
+        }
+        
         this.id = contador;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -25,12 +29,14 @@ class Plato
 
     public Plato setNombre(string nombre)
     {
-        this.nombre = nombre;
+
+        this.nombre = nombre.Trim() != "" ? nombre : "Plato sin nombre";
         return this;
     }
     public Plato setDescripcion(string descripcion)
     {
-        this.descripcion = descripcion;
+
+        this.descripcion =  descripcion.Trim() != "" ? descripcion : "No tiene descripcion";
         return this;
     }
     public Plato setPrecio(double precio)
@@ -61,7 +67,7 @@ class Nodo
 
 class LinkedList
 {
-    Nodo nodo_prin;
+    public Nodo nodo_prin;
 
     public Nodo ultimo_nodo(Nodo nodo_act)
     {
@@ -147,6 +153,25 @@ class LinkedList
 class Program
 {
     // Métodos para manejar errores
+
+    public static string LeerString(string mensaje){
+
+        string texto;
+
+        while(true){
+            Console.WriteLine(mensaje);
+
+            texto = Console.ReadLine();
+
+            if(texto == ""){
+                Console.WriteLine("❌ Error: el texto no puede estar vacío. Intente nuevamente.\n");
+            }
+            else{
+                return texto;
+            }
+                
+        }
+    }
     public static double LeerDouble(string mensaje)
     {
         double valor;
@@ -183,9 +208,118 @@ class Program
         }
     }
 
+    public static LinkedList obtenerDatos(){
+        LinkedList list = new LinkedList();
+        string ruta = "Carta.txt";
+
+        using(StreamReader sr = new StreamReader(ruta)){
+            string linea;
+            Console.WriteLine("hola");
+            //Avanza por cada linea escrita del bloc de notas
+            
+            
+            string nombre = "";
+            string descripcion = "";
+            double precio = 0;
+
+            while((linea = sr.ReadLine()) != null){
+                
+                Console.WriteLine(linea);
+
+                
+                if(!string.IsNullOrWhiteSpace(linea)){
+                   
+                    
+                    string[] partes = linea.Split(":");
+
+                    
+                    string key = partes[0].Trim();
+                    string value = partes[1].Trim();
+
+                   
+
+                    if(key.ToLower()=="nombre"){
+                        
+                        nombre = value;
+                    }
+                    if(key.ToLower()=="descripcion"){
+                        descripcion = value;
+                    }
+                    if(key.ToLower()=="precio"){
+                        precio = double.Parse(value);
+                    }
+
+                    if(nombre != "" && descripcion != "" && precio != 0){
+                        Plato plato = new Plato(nombre, descripcion, precio);
+                        Nodo nodo = new Nodo(plato);
+
+                        list.agregar_nodo(nodo);
+
+                        nombre = "";
+                        descripcion = "";
+                        precio = 0;
+                    }
+
+                }
+                
+            }
+            
+        }
+        return list;
+    }
+
+    //Guardado de datos
+    public static void guardarDatos(LinkedList lista){
+        string ruta = "Carta.txt";
+
+        using(StreamWriter sr = new StreamWriter(ruta)){
+            
+            void guardarNodos(Nodo nodo_guardar){
+                Plato plato = nodo_guardar.valor;
+                Nodo plato_siguiente = nodo_guardar.siguiente !=null ? nodo_guardar.siguiente : null;
+
+                string nombre = plato.getNombre();
+                string descripcion = plato.getDescripcion();
+                double precio = plato.getPrecio();
+
+                //Guardar los atributos
+                sr.WriteLine($"Nombre: {nombre}");
+                sr.WriteLine($"Descripcion: {descripcion}");
+                sr.WriteLine($"Precio: {precio}");
+
+                //Espaciado para el siguiente plato
+                sr.WriteLine("");
+
+                if(plato_siguiente !=null){
+                    guardarNodos(plato_siguiente);
+                }
+                
+            }
+            if(lista.nodo_prin==null){
+                Console.WriteLine("No hay nodos a setear");
+            }   
+            else{
+                Nodo nodo_prin = lista.nodo_prin;
+
+                guardarNodos(nodo_prin);
+            } 
+            
+        }
+    }
+
+    //Inicio del algoritmo
     static void Main(string[] args)
     {
-        LinkedList lista = new LinkedList();
+        //Verificar si archivo existe
+        LinkedList lista;
+        string ruta = Path.Combine(Directory.GetCurrentDirectory(), "Carta.txt");
+        if(File.Exists(ruta)){
+            lista = obtenerDatos();
+        }
+        else{
+            lista = new LinkedList();
+        }
+             
 
         while (true)
         {
@@ -208,11 +342,9 @@ class Program
             {
                 case "1":
                     Console.WriteLine("\n================= ➕ NUEVO PLATO =================");
-                    Console.Write("🍽️  Nombre del plato: ");
-                    string nombre = Console.ReadLine();
+                    string nombre = LeerString("🍽️  Nombre del plato: ");
 
-                    Console.Write("📝 Descripción: ");
-                    string descripcion = Console.ReadLine();
+                    string descripcion = LeerString("📝 Descripción del plato: ");
 
                     double precio = LeerDouble("💰 Precio: $");
 
@@ -235,11 +367,10 @@ class Program
                     }
 
                     Console.WriteLine($"\n✏️  Editando el plato '{nodo_editar.valor.getNombre()}'");
-                    Console.Write($"🍽️  Nuevo nombre (actual: {nodo_editar.valor.getNombre()}): ");
-                    nodo_editar.valor.setNombre(Console.ReadLine());
+                    nodo_editar.valor.setNombre(LeerString($"🍽️  Nuevo nombre (actual: {nodo_editar.valor.getNombre()}): "));
 
-                    Console.Write($"📝 Nueva descripción (actual: {nodo_editar.valor.getDescripcion()}): ");
-                    nodo_editar.valor.setDescripcion(Console.ReadLine());
+                    Console.WriteLine();
+                    nodo_editar.valor.setDescripcion(LeerString($"📝 Nueva descripción (actual: {nodo_editar.valor.getDescripcion()}): "));
 
                     double nuevo_precio = LeerDouble($"💰 Nuevo precio (actual: ${nodo_editar.valor.getPrecio()}): $");
                     nodo_editar.valor.setPrecio(nuevo_precio);
@@ -267,6 +398,7 @@ class Program
                     break;
 
                 case "6":
+                    guardarDatos(lista);
                     Console.WriteLine("\n👋 Gracias por usar la administración de la carta. ¡Hasta luego!");
                     return;
 
